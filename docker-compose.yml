@@ -1,0 +1,19 @@
+gitbucket:
+  container_name: gitbucket
+  build: gitbucket
+  volumes:
+    - "./gitbucket/data:/gitbucket"
+    - "/etc/localtime:/etc/localtime:ro"
+  ports:
+    - "localhost:8080:8080"
+  links:
+    - "gitbucket-postgres"
+gitbucket-postgres:
+  container_name: gitbucket-postgres
+  image: kiasaki/alpine-postgres
+  environment: # https://hub.docker.com/_/postgres/
+    POSTGRES_USER: "gitbucket"
+    POSTGRES_PASSWORD: "******"
+  volumes:
+    - "./gitbucket/data/postgres:/var/lib/postgresql/data"
+    - "/etc/localtime:/etc/localtime:ro"
